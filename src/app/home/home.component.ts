@@ -6,7 +6,7 @@ import { Oferta } from '../shared/oferta.model'
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  providers: [ OfertasService ]
+  providers: [OfertasService]
 })
 export class HomeComponent implements OnInit {
 
@@ -14,10 +14,21 @@ export class HomeComponent implements OnInit {
 
   constructor(private ofertasService: OfertasService) { }
 
-  ngOnInit() {    
-    this.ofertas = this.ofertasService.getOfertas();
-    console.log(this.ofertas)
-    
+  ngOnInit() {
+    //this.ofertas = this.ofertasService.getOfertas();
+    //console.log(this.ofertas)
+
+    this.ofertasService.getOfertas2()
+      .then((ofertas: Array<Oferta>) => { //resolve
+        this.ofertas = ofertas
+      })
+      .catch(( param: any ) => { //reject
+        console.log(param)
+      })
+
+    //then: excecuta uma ação quando a promesa(Promise) estiver resolvida.
+    //cath: excecuta uma ação quando a promesa(Promise) for rejeitada.
+
   }
 
 }

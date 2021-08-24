@@ -57,4 +57,17 @@ export class OfertasService {
     public getOfertas(): Array<Oferta> {
         return this.ofertas
     }
+
+    //metodo que retorna uma promesa 
+
+    public getOfertas2(): Promise<Array<Oferta>> {
+        //algum tipo de processamento, que ao finalizar, chama a função resolve ou reject
+        return new Promise((resolve, reject) => {           
+            if (Promise) {
+                resolve(this.ofertas)
+            } else {
+                reject({ codigo_erro: 404, mensagem_erro: 'Servidor não encontrado!' })
+            }
+        });
+    }
 }
