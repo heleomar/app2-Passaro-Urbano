@@ -11,5 +11,6 @@ export const ROUTES: Routes = [
     { path: 'diversao', component: DiversaoComponent }, //localhost:4200/diversao  = DiversaoComponent
     { path: 'oferta', component: HomeComponent}, 
     { path: 'oferta/:id', component: OfertaComponent}, 
+    
 ] 
     
