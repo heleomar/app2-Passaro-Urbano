@@ -10,14 +10,6 @@ export class OfertasService {
    
     constructor(private http: HttpClient) { }
 
-
-    public getOfertas(): Promise<Array<Oferta>> {
-
-        return this.http.get(`${URL_API}?destaque=true`)
-            .toPromise() //convertendo para Promise, pq ele é um observable!
-            .then((resposta: any) => resposta)
-    }
-
     //metodo que retorna uma promesa 
 
     //public getOfertas2(): Promise<Array<Oferta>> {
@@ -31,22 +23,44 @@ export class OfertasService {
     //    });
     //}
 
+
+    public getOfertas(): Promise<Array<Oferta>> {
+
+        return this.http.get(`${URL_API}/ofertas?destaque=true`)
+            .toPromise() //convertendo para Promise, pq ele é um observable!
+            .then((resposta: any) => resposta)
+    }
+    
+
     public getOfertasPorCategoria(categoria: String): Promise<Array<Oferta>> {
-        return this.http.get(`${URL_API}?categoria=${categoria}`)
+        return this.http.get(`${URL_API}/ofertas?categoria=${categoria}`)
             .toPromise()
             .then()
     }
 
     public getOfertaPorId(id: number): Promise<Oferta> {
-        return this.http.get(`${URL_API}?id=${id}`)
+        return this.http.get(`${URL_API}/ofertas?id=${id}`)
             .toPromise()
             .then((resposta: any) => {
              // return resposta[0] // pega a primeira posição do Array!
                 return resposta.shift() // shift pega a primeira posição do Array!
-            })            
-                             
-           
-        
+            })  
+    }
+
+    public getComoUsarOfertaPorId(id: number): Promise<string> {
+        return this.http.get(`${URL_API}/como-usar?id=${id}`)
+        .toPromise()
+        .then((resposta: any) => {            
+            return resposta[0].descricao
+        })
+    }
+
+    public getOndeFicaOfertaPorId(id: number): Promise<string> {
+        return this.http.get(`${URL_API}/onde-fica?id=${id}`)
+        .toPromise()
+        .then((resposta: any) => {            
+            return resposta[0].descricao
+        })
     }
 
 
