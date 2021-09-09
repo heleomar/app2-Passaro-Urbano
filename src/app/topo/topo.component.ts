@@ -14,6 +14,7 @@ import { switchMap, debounceTime } from 'rxjs/operators';
 export class TopoComponent implements OnInit {
 
   public ofertas: Observable<Array<Oferta>>
+  public ofertas2: Array<Oferta>
   private subjectPesquisa: Subject<string> = new Subject<string>();
 
   constructor(private ofertasServices: OfertasService) { }
@@ -21,6 +22,7 @@ export class TopoComponent implements OnInit {
   ngOnInit(): void {
     this.ofertas = this.subjectPesquisa // retorno Array Oferta
       //debounceTime executa a ação do switchMap após 1 segundo
+      //distinctUntilChanged para pesquisas diferentes
       .pipe(debounceTime(1000), distinctUntilChanged(), switchMap((termo: string) => {
         if (termo.trim() === '') {
           //precisa retornar um observable de Array oferta vazio
@@ -33,7 +35,10 @@ export class TopoComponent implements OnInit {
       }))
       
 
-    this.ofertas.subscribe((ofertas: Array<Oferta>) => console.log(ofertas))
+    this.ofertas.subscribe((ofertas: Array<Oferta>) => {
+      console.log(ofertas)
+      this.ofertas2 = ofertas
+    })
 
   }
 
