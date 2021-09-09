@@ -78,5 +78,4 @@ export class OfertasService {
         .pipe(map((resposta: any) => resposta))    
     }
 
-
 }
