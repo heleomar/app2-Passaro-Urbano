@@ -1,4 +1,4 @@
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, of } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { OfertasService } from '../ofertas.service';
 import { Oferta } from '../shared/oferta.model';
@@ -19,9 +19,12 @@ export class TopoComponent implements OnInit {
 
   ngOnInit(): void {
     this.ofertas = this.subjectPesquisa // retorno Array Oferta
-       //debounceTime executa a ação do switchMap após 1 segundo
+      //debounceTime executa a ação do switchMap após 1 segundo
       .pipe(debounceTime(1000), switchMap((termo: string) => {
-        console.log('requisição', termo)
+        if (termo.trim() === '') {
+          //precisa retornar um observable de Array oferta vazio
+          return of(Array<Oferta>())
+        }
         return this.ofertasServices.pesquisaOfertas(termo)
       }))
 
