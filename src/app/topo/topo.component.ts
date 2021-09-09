@@ -1,5 +1,5 @@
 import { Observable, Subject, of } from 'rxjs';
-import { distinctUntilChanged } from 'rxjs/operators';
+import { distinctUntilChanged, catchError  } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { OfertasService } from '../ofertas.service';
 import { Oferta } from '../shared/oferta.model';
@@ -27,7 +27,11 @@ export class TopoComponent implements OnInit {
           return of(Array<Oferta>())
         }
         return this.ofertasServices.pesquisaOfertas(termo)
+      }), catchError((err: any) => {
+        console.log(err)
+        return of(Array<Oferta>())
       }))
+      
 
     this.ofertas.subscribe((ofertas: Array<Oferta>) => console.log(ofertas))
 
